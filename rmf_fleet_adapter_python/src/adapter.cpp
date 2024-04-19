@@ -292,6 +292,30 @@ PYBIND11_MODULE(rmf_adapter, m) {
     &agv::RobotUpdateHandle::enable_responsive_wait,
     py::arg("value"));
 
+  // Adding the wathdog bindings here
+  .def("set_unstable_lift_entry_watchdog",
+    [&](agv::RobotUpdateHandle& self,
+        agv::RobotUpdateHandle::Unstable::Watchdog watchdog,
+        rmf_traffic::Duration wait_duration)
+    {
+      self.unstable().set_lift_entry_watchdog(watchdog, wait_duration);
+    },
+    py::arg("watchdog"),
+    py::arg("wait_duration") = std::chrono::seconds(10),
+    "Experimental API to set the lift entry watchdog");
+
+  auto m_robot_update_handle = m.def_submodule("robot_update_handle");
+
+  py::enum_<agv::RobotUpdateHandle::Unstable::Decision>(
+    m_robot_update_handle, "Decision")
+  .value("Undefined",
+    agv::RobotUpdateHandle::Unstable::Decision::Undefined)
+  .value("Clear",
+    agv::RobotUpdateHandle::Unstable::Decision::Clear)
+  .value("Crowded",
+    agv::RobotUpdateHandle::Unstable::Decision::Crowded);
+
+
   // ACTION EXECUTOR   =======================================================
   auto m_robot_update_handle = m.def_submodule("robot_update_handle");
 
