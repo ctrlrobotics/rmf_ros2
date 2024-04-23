@@ -291,7 +291,6 @@ PYBIND11_MODULE(rmf_adapter, m) {
   .def("enable_responsive_wait",
     &agv::RobotUpdateHandle::enable_responsive_wait,
     py::arg("value"));
-
   // Adding the wathdog bindings here
   .def("set_unstable_lift_entry_watchdog",
     [&](agv::RobotUpdateHandle& self,
@@ -303,6 +302,8 @@ PYBIND11_MODULE(rmf_adapter, m) {
     py::arg("watchdog"),
     py::arg("wait_duration") = std::chrono::seconds(10),
     "Experimental API to set the lift entry watchdog");
+
+// DECISION ENUMS ===========================================================
 
   auto m_robot_update_handle = m.def_submodule("robot_update_handle");
 
@@ -317,7 +318,6 @@ PYBIND11_MODULE(rmf_adapter, m) {
 
 
   // ACTION EXECUTOR   =======================================================
-  auto m_robot_update_handle = m.def_submodule("robot_update_handle");
 
   py::class_<ActivityIdentifier, std::shared_ptr<ActivityIdentifier>>(
     m_robot_update_handle, "ActivityIdentifier")
