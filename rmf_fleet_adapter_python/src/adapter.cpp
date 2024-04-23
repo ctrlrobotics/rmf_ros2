@@ -290,7 +290,7 @@ PYBIND11_MODULE(rmf_adapter, m) {
     py::arg("text"))
   .def("enable_responsive_wait",
     &agv::RobotUpdateHandle::enable_responsive_wait,
-    py::arg("value"));
+    py::arg("value"))
   // Adding the wathdog bindings here
   .def("set_unstable_lift_entry_watchdog",
     [&](agv::RobotUpdateHandle& self,
